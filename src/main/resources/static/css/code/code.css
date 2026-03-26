@@ -1,0 +1,28 @@
+/**
+ *	File Name			: code.css
+ *	File Description	: 코드 관리 화면 전용 스타일 (base.css 상속 및 특화 스타일)
+ *
+ *	Date				Author				Description
+ *	--------------------------------------------------------
+ *	2026-03-18			yeoun1107			최초작성
+ *	2026-03-18			yeoun1107			공통 스타일 base.css로 이관 및 최적화
+ */
+
+/* 코드 관리 특화: 카드 내부 공통 패딩 */
+.code-card {
+	padding: 30px !important;
+}
+
+/* 코드 관리 특화: 검색 영역 상단 여백 */
+.code-search-box {
+	display: flex;
+	gap: 12px;
+	margin-bottom: 24px;
+}
+
+.code-search-box .btn-auth {
+	width: 100px;
+	margin-top: 0;
+}
+
+/* 수정 모드 시 강조 효과 등 도메인 전용 스타일 필요 시 하단에 추가 */

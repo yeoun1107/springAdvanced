@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	File Name			: CodeMapper.xml
+	File Description	: 코드 관리 SQL 매퍼
+	Writter				: yeoun1107
+	Date				: 2026-03-18
+	EditHistory			: 최초작성
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.spring.code.dao.CodeDao">
+
+	<!-- 
+		CodeDao.selectCodeGroupList
+		@Description : 코드 그룹 목록 조회
+	-->
+	<select id="selectCodeGroupList" parameterType="com.study.spring.code.vo.CodeGroupVo" resultType="com.study.spring.code.vo.CodeGroupVo">
+		/* CodeMapper.selectCodeGroupList */
+		SELECT 
+			group_cd, group_nm, group_desc, use_yn, reg_id, reg_dt, upd_id, upd_dt
+		FROM tb_code_group
+		WHERE 1=1
+		<if test="groupNm != null and groupNm != ''">
+			AND (
+				group_cd LIKE '%' || #{groupNm} || '%'
+				OR group_nm LIKE '%' || #{groupNm} || '%'
+			)
+		</if>
+		ORDER BY reg_dt DESC
+	</select>
+
+	<!-- 
+		CodeDao.selectCodeGroup
+		@Description : 코드 그룹 단건 조회
+	-->
+	<select id="selectCodeGroup" parameterType="String" resultType="com.study.spring.code.vo.CodeGroupVo">
+		/* CodeMapper.selectCodeGroup */
+		SELECT 
+			group_cd, group_nm, group_desc, use_yn, reg_id, reg_dt, upd_id, upd_dt
+		FROM tb_code_group
+		WHERE group_cd = #{groupCd}
+	</select>
+
+	<!-- 
+		CodeDao.insertCodeGroup
+		@Description : 코드 그룹 등록
+	-->
+	<insert id="insertCodeGroup" parameterType="com.study.spring.code.vo.CodeGroupVo">
+		/* CodeMapper.insertCodeGroup */
+		INSERT INTO tb_code_group (
+			group_cd, group_nm, group_desc, use_yn, reg_id, reg_dt
+		) VALUES (
+			#{groupCd}, #{groupNm}, #{groupDesc}, 'Y', #{regId}, TO_CHAR(NOW(), 'YYYYMMDDHH24MISS')
+		)
+	</insert>
+
+	<!-- 
+		CodeDao.updateCodeGroup
+		@Description : 코드 그룹 수정
+	-->
+	<update id="updateCodeGroup" parameterType="com.study.spring.code.vo.CodeGroupVo">
+		/* CodeMapper.updateCodeGroup */
+		UPDATE tb_code_group
+		SET group_nm = #{groupNm}
+			, group_desc = #{groupDesc}
+			, use_yn = #{useYn}
+			, upd_id = #{updId}
+			, upd_dt = TO_CHAR(NOW(), 'YYYYMMDDHH24MISS')
+		WHERE group_cd = #{groupCd}
+	</update>
+
+	<!-- 
+		CodeDao.deleteCodeGroup
+		@Description : 코드 그룹 삭제 (Soft Delete)
+	-->
+	<update id="deleteCodeGroup" parameterType="com.study.spring.code.vo.CodeGroupVo">
+		/* CodeMapper.deleteCodeGroup */
+		UPDATE tb_code_group
+		SET use_yn = 'N'
+			, upd_id = #{updId}
+			, upd_dt = TO_CHAR(NOW(), 'YYYYMMDDHH24MISS')
+		WHERE group_cd = #{groupCd}
+	</update>
+
+	<!-- 
+		CodeDao.selectCodeDetailList
+		@Description : 코드 상세 목록 조회
+	-->
+	<select id="selectCodeDetailList" parameterType="com.study.spring.code.vo.CodeDetailVo" resultType="com.study.spring.code.vo.CodeDetailVo">
+		/* CodeMapper.selectCodeDetailList */
+		SELECT 
+			group_cd, detail_cd, code_nm, code_desc, sort_order, use_yn, reg_id, reg_dt, upd_id, upd_dt
+		FROM tb_code_detail
+		WHERE group_cd = #{groupCd}
+		<if test="useYn != null and useYn != ''">
+			AND use_yn = #{useYn}
+		</if>
+		ORDER BY sort_order ASC, detail_cd ASC
+	</select>
+
+	<!-- 
+		CodeDao.selectCodeDetail
+		@Description : 코드 상세 단건 조회
+	-->
+	<select id="selectCodeDetail" parameterType="com.study.spring.code.vo.CodeDetailVo" resultType="com.study.spring.code.vo.CodeDetailVo">
+		/* CodeMapper.selectCodeDetail */
+		SELECT 
+			group_cd, detail_cd, code_nm, code_desc, sort_order, use_yn, reg_id, reg_dt, upd_id, upd_dt
+		FROM tb_code_detail
+		WHERE group_cd = #{groupCd}
+		AND detail_cd = #{detailCd}
+	</select>
+
+	<!-- 
+		CodeDao.insertCodeDetail
+		@Description : 코드 상세 등록
+	-->
+	<insert id="insertCodeDetail" parameterType="com.study.spring.code.vo.CodeDetailVo">
+		/* CodeMapper.insertCodeDetail */
+		INSERT INTO tb_code_detail (
+			group_cd, detail_cd, code_nm, code_desc, sort_order, use_yn, reg_id, reg_dt
+		) VALUES (
+			#{groupCd}, #{detailCd}, #{codeNm}, #{codeDesc}, #{sortOrder}, 'Y', #{regId}, TO_CHAR(NOW(), 'YYYYMMDDHH24MISS')
+		)
+	</insert>
+
+	<!-- 
+		CodeDao.updateCodeDetail
+		@Description : 코드 상세 수정
+	-->
+	<update id="updateCodeDetail" parameterType="com.study.spring.code.vo.CodeDetailVo">
+		/* CodeMapper.updateCodeDetail */
+		UPDATE tb_code_detail
+		SET code_nm = #{codeNm}
+			, code_desc = #{codeDesc}
+			, sort_order = #{sortOrder}
+			, use_yn = #{useYn}
+			, upd_id = #{updId}
+			, upd_dt = TO_CHAR(NOW(), 'YYYYMMDDHH24MISS')
+		WHERE group_cd = #{groupCd}
+		AND detail_cd = #{detailCd}
+	</update>
+
+	<!-- 
+		CodeDao.deleteCodeDetail
+		@Description : 코드 상세 삭제 (Soft Delete)
+	-->
+	<update id="deleteCodeDetail" parameterType="com.study.spring.code.vo.CodeDetailVo">
+		/* CodeMapper.deleteCodeDetail */
+		UPDATE tb_code_detail
+		SET use_yn = 'N'
+			, upd_id = #{updId}
+			, upd_dt = TO_CHAR(NOW(), 'YYYYMMDDHH24MISS')
+		WHERE group_cd = #{groupCd}
+		AND detail_cd = #{detailCd}
+	</update>
+
+</mapper>
