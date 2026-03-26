@@ -24,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
  * --------------------------------------------------------------
  * 	2026-03-12			yeoun1107				최초작성
  * 	2026-03-16			yeoun1107				username -> userId 컬럼 변경 대응
+ *  2026-03-25			yeoun1107				전역 에러 처리 핸들러를 사용한 리팩토링(코드 간결화)
  */
 @Slf4j
 @Service
@@ -48,6 +49,7 @@ public class LoginServiceImpl implements LoginService {
      * 2026-03-12			yeoun1107			최초작성
      * 2026-03-13			yeoun1107			VO 매핑 및 날짜 포맷팅(yyyyMMddHHmmss) 적용
      * 2026-03-16			yeoun1107			username -> userId 컬럼 변경 대응
+	 * 2026-03-25			yeoun1107			전역 에러 처리 핸들러를 사용한 리팩토링(코드 간결화)
      */
 	@Override
 	public boolean existUserId(String userId) throws Exception {
@@ -72,6 +74,7 @@ public class LoginServiceImpl implements LoginService {
      * 2026-03-12			yeoun1107			최초작성
      * 2026-03-13			yeoun1107			VO 매핑 및 날짜 포맷팅(yyyyMMddHHmmss) 적용
      * 2026-03-16			yeoun1107			username -> userId 컬럼 변경 대응
+	 * 2026-03-25			yeoun1107			전역 에러 처리 핸들러를 사용한 리팩토링(코드 간결화)
      */
 	@Override
 	public LoginVo retrieveLogin(LoginRequestDto loginRequestDto) throws Exception {

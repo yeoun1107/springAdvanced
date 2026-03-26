@@ -27,6 +27,7 @@ import com.study.spring.login.vo.LoginVo;
  * --------------------------------------------------------------
  * 	2026-03-12			yeoun1107				최초작성
  * 	2026-03-16			yeoun1107				username -> userId 컬럼 변경 대응
+ *  2026-03-25			yeoun1107				전역 에러 처리 핸들러를 사용한 리팩토링(코드 간결화)
  */
 @Slf4j
 @RestController
@@ -50,6 +51,7 @@ public class LoginApiController {
 	 *  --------------------------------------------------------------
 	 *  2026-03-12			    yeoun1107			최초작성
 	 *  2026-03-16				yeoun1107			username -> userId 컬럼 변경 대응
+	 *  2026-03-25				yeoun1107			전역 에러 처리 핸들러를 사용한 리팩토링(코드 간결화)
 	 */
 	@GetMapping("/exist-user-id/{userId}")
 	public CommonResponseDto<Boolean> existUserId(@PathVariable String userId) throws Exception {
@@ -83,6 +85,7 @@ public class LoginApiController {
 	 *  --------------------------------------------------------------
 	 *  2026-03-12			    yeoun1107			최초작성
 	 *  2026-03-16				yeoun1107			username -> userId 컬럼 변경 대응
+	 *  2026-03-25				yeoun1107			전역 에러 처리 핸들러를 사용한 리팩토링(코드 간결화)
 	 */
 	@PostMapping("/retrieve-login")
 	public CommonResponseDto<SessionUserDto> retrieveLogin(HttpSession session, @RequestBody LoginRequestDto loginRequestDto) throws Exception {
