@@ -1,0 +1,47 @@
+<!--
+ *	File Name			: restClientEx.html
+ *	File Description	: RestClient 예제 화면
+ *
+ *	Date				Author				   Description
+ *	--------------------------------------------------------
+ *	2026-03-19    		yeoun1107			   최초작성
+ *
+-->
+<!DOCTYPE html>
+<html lang="ko" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<th:block layout:fragment="content">
+    <div class="dashboard-header mb-4">
+        <h2>Rest Client 예제</h2>
+        <p>Spring 3.2+ Rest Client를 활용한 외부 API (환율) 연동 예제</p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 rounded-3">
+                <div class="card-body p-4 text-center">
+                    <div class="mb-3">
+                        <span class="badge bg-primary-subtle text-primary rounded-pill px-3">USD / KRW</span>
+                    </div>
+                    <h5 class="card-title mb-4">오늘의 달러 환율</h5>
+                    <div class="display-6 fw-bold text-dark mb-2">
+                        <span id="krwValue">-</span>
+                        <small class="text-muted fs-4">원</small>
+                    </div>
+                    <p class="text-muted small">실시간 외부 API 데이터 수신 중...</p>
+                    <button type="button" class="btn btn-outline-primary btn-sm mt-3" onclick="location.reload();">
+                        <i class="ti ti-refresh me-1"></i> 새로고침
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block layout:fragment="script">
+    <script th:src="@{/js/practice/restClientEx.js}"></script>
+</th:block>
+</html>
