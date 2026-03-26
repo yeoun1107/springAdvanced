@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+ * File Name			: LoginMapper.xml
+ * File Description		: 로그인 및 회원가입 처리 Mapper
+ *
+ * Date					Author					Description
+ * ==============================================================
+ * 2026-03-12			yeoun1107				최초작성
+ * 2026-03-13			yeoun1107				아이디 중복 체크 및 로그인 조회 쿼리 추가
+ * 2026-03-16			yeoun1107				username -> user_id 컬럼 변경 대응
+-->
+<mapper namespace="com.study.spring.login.dao.LoginDao">
+
+	<!--
+	 * @Description 로그인 사용자 조회 샘플
+	 * @Query ID selectLogin
+	 * @Writter yeoun1107
+	 * @Date 2026-03-12
+	 * 
+	 * @EditHistory
+	 * Date					Author				Description
+	 * ==============================================================
+	 * 2026-03-12			yeoun1107			최초작성
+	-->
+	<select id="selectLogin" resultType="map">
+		<!-- LoginMapper.selectLogin -->
+		SELECT 'test' as id
+	</select>
+
+	<!--
+	 * @Description 아이디 중복 체크 (사용자 수 조회)
+	 * @Query ID selectCountUserId
+	 * @Writter yeoun1107
+	 * @Date 2026-03-13
+	 * 
+	 * @EditHistory
+	 * Date					Author				Description
+	 * ==============================================================
+	 * 2026-03-13			yeoun1107			최초작성
+	 * 2026-03-16			yeoun1107			username -> user_id 컬럼 변경 대응
+	-->
+	<select id="selectCountUserId" parameterType="string" resultType="int">
+		<!-- LoginMapper.selectCountUserId -->
+		SELECT COUNT(*)
+		FROM tb_user
+		WHERE user_id = #{userId}
+		AND del_yn = 'N'
+	</select>
+
+	<!--
+	 * @Description 로그인 사용자 정보 조회
+	 * @Query ID selectUserForLogin
+	 * @Writter yeoun1107
+	 * @Date 2026-03-13
+	 * 
+	 * @EditHistory
+	 * Date					Author				Description
+	 * ==============================================================
+	 * 2026-03-13			yeoun1107			최초작성
+	 * 2026-03-16			yeoun1107			username -> user_id 컬럼 변경 대응
+	-->
+	<select id="selectUserForLogin" parameterType="com.study.spring.login.vo.LoginVo" resultType="com.study.spring.login.vo.LoginVo">
+		<!-- LoginMapper.selectUserForLogin -->
+		SELECT
+			user_no AS userNo,
+			user_id AS userId,
+			password,
+			del_yn AS delYn,
+			create_dt AS createDt,
+			update_dt AS updateDt
+		FROM tb_user
+		WHERE user_id = #{userId}
+		AND del_yn = 'N'
+	</select>
+
+	<!--
+	 * @Description 회원가입 사용자 저장
+	 * @Query ID insertUser
+	 * @Writter yeoun1107
+	 * @Date 2026-03-12
+	 * 
+	 * @EditHistory
+	 * Date					Author				Description
+	 * ==============================================================
+	 * 2026-03-12			yeoun1107			최초작성
+	 * 2026-03-13			yeoun1107			create_dt, update_dt 포맷 변경 대응
+	 * 2026-03-16			yeoun1107			username -> user_id 컬럼 변경 대응
+	-->
+	<insert id="insertUser" parameterType="com.study.spring.login.vo.LoginVo">
+		<!-- LoginMapper.insertUser -->
+		INSERT INTO tb_user (
+			user_id,
+			password,
+			del_yn,
+			create_dt,
+			update_dt
+		) VALUES (
+			#{userId},
+			#{password},
+			'N',
+			#{createDt},
+			#{updateDt}
+		)
+	</insert>
+
+</mapper>

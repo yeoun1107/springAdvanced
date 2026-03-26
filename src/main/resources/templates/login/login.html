@@ -1,0 +1,45 @@
+<!--
+ *   File Name			: login.html
+ *   File Description	: 로그인 화면
+ *
+ *   Date				Author				Description
+ *	--------------------------------------------------------
+ *	2026-03-13		    yeoun1107			최초작성
+-->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Study Spring</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+</head>
+<body class="auth-body">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h1>Study Spring</h1>
+            <p>Welcome back! Please login to your account.</p>
+        </div>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="userId">ID</label>
+                <input type="text" id="userId" name="userId" class="form-control" placeholder="아이디를 입력하세요" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="비밀번호를 입력하세요" required>
+            </div>
+            <button type="button" id="btnLogin" class="btn-auth">로그인</button>
+        </form>
+        <div class="auth-footer">
+            계정이 없으신가요? <a th:href="@{/signup}">계정 생성</a>
+        </div>
+    </div>
+
+	<!-- Scripts -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script th:src="@{/js/commUtil.js}"></script>
+	<script th:src="@{/js/login/login.js}"></script>
+</body>
+</html>
