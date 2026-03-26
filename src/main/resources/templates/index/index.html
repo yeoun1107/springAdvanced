@@ -1,0 +1,85 @@
+<!--
+ *   File Name			: index.html
+ *   File Description	: 메인 대시보드 화면
+ *
+ *   Date				Author				Description
+ *	--------------------------------------------------------
+ *	2026-03-16		    yeoun1107			최초작성
+-->
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+    <th:block layout:fragment="content">
+        <!-- Page Header -->
+        <div class="dashboard-header">
+            <h2>Dashboard</h2>
+            <p>Welcome to the Study Spring project! Here is your project overview.</p>
+        </div>
+
+        <!-- Dashboard Cards -->
+        <div class="dashboard-grid">
+            <!-- User Stats Card -->
+            <div class="card">
+                <div class="stat-card-header">
+                    <span class="stat-card-label">Total Users</span>
+                    <div class="stat-card-icon bg-primary">U</div>
+                </div>
+                <h3 class="stat-card-value">1,284</h3>
+                <p class="stat-card-desc">
+                    <span class="trend text-success">↑ 3.48%</span>
+                    <span class="text-secondary">Since last month</span>
+                </p>
+            </div>
+
+            <!-- Board Posts Card -->
+            <div class="card">
+                <div class="stat-card-header">
+                    <span class="stat-card-label">Board Posts</span>
+                    <div class="stat-card-icon bg-info">B</div>
+                </div>
+                <h3 class="stat-card-value">352</h3>
+                <p class="stat-card-desc">
+                    <span class="trend text-success">↑ 12.5%</span>
+                    <span class="text-secondary">New posts today</span>
+                </p>
+            </div>
+
+            <!-- Project Progress Card -->
+            <div class="card">
+                <div class="stat-card-header">
+                    <span class="stat-card-label">System Health</span>
+                    <div class="stat-card-icon bg-success">H</div>
+                </div>
+                <h3 class="stat-card-value">99.9%</h3>
+                <p class="stat-card-desc text-secondary">System status is optimal</p>
+            </div>
+        </div>
+
+        <!-- Project Info Card -->
+        <div class="card mt-4">
+            <div class="info-card-header">
+                <h3>Project Progress Update</h3>
+            </div>
+            <div class="info-card-content">
+                <p>Layout structure has been successfully refactored using <strong>Thymeleaf fragments</strong>.</p>
+                <p>Modernized UI with <strong>Tabler.io</strong> style and card-based design.</p>
+                <ul class="info-card-list">
+                    <li>Header, Left, Footer fragments implemented</li>
+                    <li>Global layout system with <code>layout:decorate</code></li>
+                    <li>Responsive grid system for dashboard cards</li>
+                </ul>
+            </div>
+        </div>
+    </th:block>
+
+    <th:block layout:fragment="script">
+        <script th:src="@{/js/index/index.js}"></script>
+    </th:block>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!--
+ *   File Name			: left.html
+ *   File Description	: 공통 사이드바 프래그먼트
+ *
+ *   Date				Author				Description
+ *	--------------------------------------------------------
+ *	2026-03-16		    yeoun1107			최초작성
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="leftFragment" class="sidebar">
+    <!-- Sidebar Menu -->
+    <ul class="sidebar-menu">
+        <li>
+            <a href="/index" class="active-menu">
+                <span class="sidebar-menu-icon">D</span>
+                <span class="sidebar-menu-text">Dashboard</span>
+            </a>
+        </li>
+        
+        <!-- Board Menu (with sub) -->
+        <li class="has-sub">
+            <a>
+                <span class="sidebar-menu-icon">B</span>
+                <span class="sidebar-menu-text">Board Management</span>
+            </a>
+            <ul class="sub-menu">
+                <li><a href="/board/list">Post List</a></li>
+                <li><a href="/board/category">Category Config</a></li>
+            </ul>
+        </li>
+
+        <!-- User Menu (with sub) -->
+        <li class="has-sub">
+            <a>
+                <span class="sidebar-menu-icon">U</span>
+                <span class="sidebar-menu-text">User Management</span>
+            </a>
+            <ul class="sub-menu">
+                <li><a href="/user/list">User List</a></li>
+                <li><a href="/user/role">Role Config</a></li>
+            </ul>
+        </li>
+
+        <li class="sidebar-menu-label">
+            <span>Settings</span>
+        </li>
+        
+        <!-- System Menu (with sub) -->
+        <li class="has-sub">
+            <a>
+                <span class="sidebar-menu-icon">S</span>
+                <span class="sidebar-menu-text">System Config</span>
+            </a>
+            <ul class="sub-menu">
+                <li><a href="/settings/code/codeMngeList">Code Config</a></li>
+                <li><a href="/settings/base">Base Config</a></li>
+                <li><a href="/settings/log">Log Viewer</a></li>
+            </ul>
+        </li>
+
+        <li class="sidebar-menu-label">
+            <span>Settings</span>
+        </li>
+        
+        <!-- Study -->
+        <li class="has-sub">
+            <a>
+                <span class="sidebar-menu-icon">P</span>
+                <span class="sidebar-menu-text">Practice</span>
+            </a>
+            <ul class="sub-menu">
+                <li><a href="/practice/restClientEx">Rest Client</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+</html>

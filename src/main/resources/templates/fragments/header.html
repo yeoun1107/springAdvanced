@@ -1,0 +1,53 @@
+<!--
+ *   File Name			: header.html
+ *   File Description	: 공통 헤더 프래그먼트
+ *
+ *   Date				Author				Description
+ *	-----------------------------------------------------------------------------
+ *	2026-03-16		    yeoun1107			최초작성
+ *  2026-03-16		    yeoun1107			로그인 유저 정보 표시 및 인라인 스타일 제거
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="headerFragment" class="header">
+    <div class="header-container">
+        <!-- Sidebar Toggle & Logo Container -->
+        <div class="header-logo-area">
+            <!-- Logo Section -->
+            <a href="/index" class="header-logo">
+                <div class="brand-logo-box">S</div>
+                <span class="fw-bold text-primary ml-2 d-none d-lg-block">Study Spring</span>
+            </a>
+            
+            <!-- Toggle Button -->
+            <button type="button" class="hamburger-btn" id="sidebarToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+
+        <!-- Breadcrumb (Hidden on Mobile) -->
+        <div class="header-breadcrumb ml-4 d-none d-lg-block">
+            <span>Pages</span> / <span class="current">Dashboard</span>
+        </div>
+        
+        <!-- Right Side: User Info & Actions -->
+        <div class="header-actions" th:if="${loginUser != null}">
+            <div class="user-profile">
+                <!-- Avatar (Initial) -->
+                <div class="user-avatar" th:text="${#strings.substring(loginUser.userId, 0, 1).toUpperCase()}">G</div>
+                
+                <!-- User Detail (Hidden on extra small screens) -->
+                <div class="user-info-detail d-none d-sm-flex">
+                    <span class="user-name" th:text="${loginUser.userId}">Guest 님</span>
+                    <span class="user-login-dt" th:text="|로그인 일시: ${loginUser.loginDt}|">로그아웃 상태입니다.</span>
+                </div>
+            </div>
+            
+            <!-- Logout Link -->
+            <a href="/login" class="logout-link ml-3">Logout</a>
+        </div>
+    </div>
+</div>
+</html>
