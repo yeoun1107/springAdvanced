@@ -1,0 +1,7 @@
+# application-local.sample.yml (GitHub 공유용)
+# 이 파일을 복사해서 application-local.yml로 이름을 바꾼 뒤 실제 값을 채우세요.
+spring:
+  datasource:
+    url : your_url
+    username: your_id
+    password: your_password

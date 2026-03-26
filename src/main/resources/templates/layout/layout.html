@@ -1,0 +1,62 @@
+<!--
+ *	File Name			: layout.html
+ *	File Description	: 공통 레이아웃 템플릿
+ *
+ *	Date				Author					Description
+ *	--------------------------------------------------------------
+ *	2026-03-18		    yeoun1107				최초작성
+ *
+-->
+<!DOCTYPE html>
+<html lang="ko" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Study Spring</title>
+    
+    <!-- Google Fonts (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- 공통 CSS -->
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    
+    <!-- 페이지별 추가 CSS -->
+    <th:block layout:fragment="css"></th:block>
+</head>
+<body>
+    <div class="layout-wrapper">
+        <!-- Sidebar Overlay (Mobile) -->
+        <div class="sidebar-overlay"></div>
+
+        <!-- 1. Header (Top Full Width) -->
+        <header th:replace="~{fragments/header :: headerFragment}"></header>
+
+        <!-- 2. Main Container (Sidebar + Content) -->
+        <div class="main-container">
+            <!-- Sidebar (Left) -->
+            <nav th:replace="~{fragments/left :: leftFragment}"></nav>
+
+            <!-- Main Content Area -->
+            <div class="main-wrapper">
+                <main class="content">
+                    <th:block layout:fragment="content"></th:block>
+                </main>
+
+                <!-- Footer -->
+                <footer th:replace="~{fragments/footer :: footerFragment}"></footer>
+            </div>
+        </div>
+    </div>
+
+    <!-- 공통 JS (jQuery & Common Util & Layout) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:src="@{/js/commUtil.js}"></script>
+    <script th:src="@{/js/layout/layout.js}"></script>
+    
+    <!-- 페이지별 추가 JS -->
+    <th:block layout:fragment="script"></th:block>
+</body>
+</html>

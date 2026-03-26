@@ -1,0 +1,56 @@
+server:
+  port: 8090
+
+spring:
+  profiles:
+    # default 는 local 프로파일을 활성화 하도록 설정
+    active: ${SRPING_PROFILES_ACTIVE:local}
+
+  output:
+    # 터미널 로그에 ANSI 색상 활성화
+    ansi:
+      enabled: always
+
+  datasource:
+    # log4jdbc:postgresql 드라이버를 사용하도록 변경하여 SQL 쿼리 가로채기
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    # net.sf.log4jdbc.sql.jdbcapi.DriverSpy를 드라이버로 설정
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+
+  sql:
+    init:
+      # 애플리케이션 시작 시마다 실행 (CREATE TABLE IF NOT EXISTS 권장)
+      mode: always
+      # 초기화 스크립트 위치 명시
+      schema-locations: classpath:sql/init.sql
+
+  thymeleaf:
+    # 개발 중에는 수정 사항이 바로 반영되도록 캐시 OFF
+    cache: false
+
+mybatis:
+  # 1. 전역 설정 파일의 위치
+  config-location: classpath:sql/mybatis-config.xml
+  # 2. SQL 쿼리가 담긴 XML 파일들의 위치
+  mapper-locations: classpath:mapper/**/*.xml
+  # 3. 모델(DTO) 객체들을 짧은 이름으로 쓰기 위한 패키지 경로
+  type-aliases-package: com.study.spring.model
+
+logging:
+  level:
+    root: info
+    com.study.spring: info
+    # log4jdbc 로깅 레벨 설정 (실행 쿼리만 INFO, 메타 로그는 OFF)
+    log4jdbc.log4j2: error    # 전반적인 상세 메타 로그 차단 (ERROR 이상만 출력)
+    jdbc.sqlonly: off        # SQL 문만 로그로 남기지 않음 (sqltiming과 중복 방지)
+    jdbc.sqltiming: info     # [핵심] SQL 문과 실행 시간, 파라미터 포함 완성된 쿼리 출력
+    jdbc.audit: off          # JDBC 호출 상세 정보(getMoreResults 등) 차단
+    jdbc.resultset: off      # 결과셋 호출 정보 차단
+    jdbc.resultsettable: info # 결과셋을 테이블 형식으로 가독성 있게 출력
+    jdbc.connection: off     # 연결 정보(Connection opened/closed) 차단
+    
+  pattern:
+    # 로그 출력 형식 지정 (색상 및 가독성 향상)
+    console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"
