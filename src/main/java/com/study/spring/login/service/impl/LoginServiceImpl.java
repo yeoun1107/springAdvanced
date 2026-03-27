@@ -11,7 +11,9 @@ import com.study.spring.login.dao.LoginDao;
 import com.study.spring.login.model.LoginRequestDto;
 import com.study.spring.login.service.LoginService;
 import com.study.spring.login.vo.LoginVo;
+import com.study.spring.utils.AssertUtil;
 import com.study.spring.utils.CustomException;
+import com.study.spring.utils.DateUtil;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -127,19 +129,11 @@ public class LoginServiceImpl implements LoginService {
 		log.info("[LoginServiceImpl] > [createSignup] 시 회원가입 비즈니스 로직 수행");
 
 		// 1. 파라미터 널 체크 (NullPointerException 방지)
-		if (loginRequestDto == null) {
-			throw new CustomException(ResponseCode.BUSINESS_ERROR, null, "회원가입 요청 데이터가 존재하지 않습니다.");
-		}
+		if (loginRequestDto == null) throw new CustomException(ResponseCode.BUSINESS_ERROR, "회원가입 요청 데이터가 존재하지 않습니다.");
+		AssertUtil.isNull(loginRequestDto.getUserId(), "아이디가 입력되지 않았습니다.");
+		AssertUtil.isNull(loginRequestDto.getPassword(), "비밀번호가 입력되지 않았습니다.");
 
-		if (loginRequestDto.getUserId() == null || loginRequestDto.getUserId().trim().isEmpty()) {
-			throw new CustomException(ResponseCode.BUSINESS_ERROR, null, "아이디가 입력되지 않았습니다.");
-		}
-
-		if (loginRequestDto.getPassword() == null || loginRequestDto.getPassword().trim().isEmpty()) {
-			throw new CustomException(ResponseCode.BUSINESS_ERROR, null, "비밀번호가 입력되지 않았습니다.");
-		}
-
-		log.info(" > 전달된 데이터 : {}", loginRequestDto.toString());
+		log.info("[LoginServiceImpl] > [createSignup] > 전달된 데이터 : {}", loginRequestDto.toString());
 		
 		// 2. VO 매핑 및 데이터 가공
 		LoginVo loginVo = new LoginVo();
@@ -147,17 +141,13 @@ public class LoginServiceImpl implements LoginService {
 		loginVo.setPassword(loginRequestDto.getPassword()); // BCrypt 암호화는 다음 단계에서 적용 예정
 		
 		// yyyyMMddHHmmss 형식으로 포맷팅
-		String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+		String now = DateUtil.getCurrentDateTime();
 		loginVo.setCreateDt(now);
 		loginVo.setDelYn("N");
 
 		// 3. DB 저장
-		try {
-			loginDao.insertUser(loginVo);
-		} catch (Exception e) {
-			log.error("[LoginServiceImpl] > [createSignup] 시 DB 처리 중 Exception 발생 ::: {}", e.getMessage());
-			throw e; // 상위 컨트롤러로 예외 전달
-		}
+		loginDao.insertUser(loginVo);
+		
 	}
 
 
