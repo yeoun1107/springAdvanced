@@ -127,34 +127,13 @@ public class LoginApiController {
 	 *  2026-03-16				yeoun1107			username -> userId 컬럼 변경 대응
 	 */
 	@PostMapping("/createSignup")
-	public CommonResponseDto<Object> createSignup(@RequestBody LoginRequestDto loginRequestDto) {
+	public CommonResponseDto<Object> createSignup(@RequestBody LoginRequestDto loginRequestDto) throws Exception {
 
 		log.info("[LoginApiController] > [createSignup] 시 회원가입 요청 수신");
 		
-		try {
-			loginService.createSignup(loginRequestDto);
-			
-			return CommonResponseDto.builder()
-					.status("success")
-					.code(200)
-					.message("계정이 성공적으로 생성되었습니다.")
-					.build();
-			
-		} catch (IllegalArgumentException e) {
-			log.error("[LoginApiController] > [createSignup] 시 유효성 검사 오류 > e.getMessage ::: {}", e.getMessage());
-			return CommonResponseDto.builder()
-					.status("error")
-					.code(400)
-					.message(e.getMessage())
-					.build();
-					
-		} catch (Exception e) {
-			log.error("[LoginApiController] > [createSignup] 시 Exception 처리 > e.getMessage ::: {}", e.getMessage());
-			return CommonResponseDto.builder()
-					.status("error")
-					.code(500)
-					.message("회원가입 처리 중 알 수 없는 오류가 발생했습니다. 잠시 후 다시 시도해주세요.")
-					.build();
-		}
+		loginService.createSignup(loginRequestDto);
+
+		return CommonResponseDto.success(null, "계정이 성공적으로 생성되었습니다.");
+		
 	}
 }

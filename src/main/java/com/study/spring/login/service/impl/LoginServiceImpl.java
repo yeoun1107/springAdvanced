@@ -119,6 +119,7 @@ public class LoginServiceImpl implements LoginService {
      * 2026-03-12			yeoun1107			최초작성
      * 2026-03-13			yeoun1107			VO 매핑 및 날짜 포맷팅(yyyyMMddHHmmss) 적용
      * 2026-03-16			yeoun1107			username -> userId 컬럼 변경 대응
+	 * 2026-03-27			yeoun1107			전역 에러 처리 핸들러를 사용한 리팩토링(코드 간결화)
      */
 	@Override
 	@Transactional(rollbackFor = Exception.class)
@@ -127,15 +128,15 @@ public class LoginServiceImpl implements LoginService {
 
 		// 1. 파라미터 널 체크 (NullPointerException 방지)
 		if (loginRequestDto == null) {
-			throw new IllegalArgumentException("회원가입 요청 데이터가 존재하지 않습니다.");
+			throw new CustomException(ResponseCode.BUSINESS_ERROR, null, "회원가입 요청 데이터가 존재하지 않습니다.");
 		}
 
 		if (loginRequestDto.getUserId() == null || loginRequestDto.getUserId().trim().isEmpty()) {
-			throw new IllegalArgumentException("아이디가 입력되지 않았습니다.");
+			throw new CustomException(ResponseCode.BUSINESS_ERROR, null, "아이디가 입력되지 않았습니다.");
 		}
 
 		if (loginRequestDto.getPassword() == null || loginRequestDto.getPassword().trim().isEmpty()) {
-			throw new IllegalArgumentException("비밀번호가 입력되지 않았습니다.");
+			throw new CustomException(ResponseCode.BUSINESS_ERROR, null, "비밀번호가 입력되지 않았습니다.");
 		}
 
 		log.info(" > 전달된 데이터 : {}", loginRequestDto.toString());
