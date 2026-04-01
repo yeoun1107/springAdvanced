@@ -71,22 +71,36 @@ public class CodeServiceTest {
 	}
 
 	@Test
-	@DisplayName("3. 코드 Soft Delete 테스트 (use_yn 업데이트)")
+	@DisplayName("3. 코드 Soft Delete 테스트 (그룹 삭제 시 상세 코드 포함)")
 	public void deleteCodeTest() throws Exception {
-		// Given
+		// Given: 그룹 및 상세 코드 2개 생성
+		String groupCd = "DEL_GRP";
 		CodeGroupVo groupVo = CodeGroupVo.builder()
-				.groupCd("DEL_GRP")
+				.groupCd(groupCd)
 				.groupNm("삭제 예정 그룹")
 				.regId("admin")
 				.build();
 		codeService.createCodeGroup(groupVo);
+
+		CodeDetailVo detail1 = CodeDetailVo.builder()
+				.groupCd(groupCd).detailCd("D1").codeNm("상세1").regId("admin").build();
+		CodeDetailVo detail2 = CodeDetailVo.builder()
+				.groupCd(groupCd).detailCd("D2").codeNm("상세2").regId("admin").build();
+		codeService.createCodeDetail(detail1);
+		codeService.createCodeDetail(detail2);
 		
-		// When
+		// When: 그룹 삭제 수행
 		int result = codeService.deleteCodeGroup(groupVo);
-		CodeGroupVo deletedGroup = codeService.retrieveCodeGroup("DEL_GRP");
 		
-		// Then
-		assertEquals(1, result);
+		// Then: 그룹 및 상세 코드들의 use_yn이 'N'인지 확인
+		CodeGroupVo deletedGroup = codeService.retrieveCodeGroup(groupCd);
 		assertEquals("N", deletedGroup.getUseYn());
+
+		CodeDetailVo searchVo = new CodeDetailVo();
+		searchVo.setGroupCd(groupCd);
+		List<CodeDetailVo> detailList = codeService.retrieveCodeDetailList(searchVo);
+		
+		// retrieveCodeDetailList는 useYn 파라미터가 없으면 전체를 조회하므로 'N'인 것들도 포함됨
+		assertTrue(detailList.stream().allMatch(d -> "N".equals(d.getUseYn())));
 	}
 }

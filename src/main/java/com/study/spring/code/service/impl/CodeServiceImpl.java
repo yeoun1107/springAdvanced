@@ -118,13 +118,17 @@ public class CodeServiceImpl implements CodeService {
 	 *  Date					Author				Description
 	 *  --------------------------------------------------------------
 	 *  2026-03-18			    yeoun1107			최초작성
+	 *  2026-03-27              yeoun1107           하위 상세 코드 일괄 Soft Delete 로직 추가
 	 */
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public int deleteCodeGroup(CodeGroupVo codeGroupVo) throws Exception {
+		// 1. 하위 상세 코드들 먼저 Soft Delete 처리
+		codeDao.deleteCodeDetailByGroup(codeGroupVo);
+
+		// 2. 코드 그룹 Soft Delete 처리
 		return codeDao.deleteCodeGroup(codeGroupVo);
 	}
-
 
 
 	/* 상세 코드 조회 */

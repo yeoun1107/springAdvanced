@@ -33,4 +33,15 @@ public interface CodeDao {
 	int insertCodeDetail(CodeDetailVo codeDetailVo) throws Exception;
 	int updateCodeDetail(CodeDetailVo codeDetailVo) throws Exception;
 	int deleteCodeDetail(CodeDetailVo codeDetailVo) throws Exception;
+
+	/**
+	 *  @Description 코드 상세 전체 삭제 (Soft Delete) - 그룹 삭제 시 연계
+	 *  @method 	  deleteCodeDetailByGroup
+	 *  @Writter 	  yeoun1107
+	 *  @Date 		  2026-03-27
+	 *  @param 		  codeGroupVo
+	 *  @return 	  int
+	 *  @throws 	  Exception
+	 */
+	int deleteCodeDetailByGroup(CodeGroupVo codeGroupVo) throws Exception;
 }

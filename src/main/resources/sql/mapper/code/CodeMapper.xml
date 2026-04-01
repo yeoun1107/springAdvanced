@@ -15,10 +15,17 @@
 	-->
 	<select id="selectCodeGroupList" parameterType="com.study.spring.code.vo.CodeGroupVo" resultType="com.study.spring.code.vo.CodeGroupVo">
 		/* CodeMapper.selectCodeGroupList */
-		SELECT 
-			group_cd, group_nm, group_desc, use_yn, reg_id, reg_dt, upd_id, upd_dt
+		SELECT group_cd
+			 , group_nm
+			 , group_desc
+			 , use_yn
+			 , reg_id
+			 , reg_dt
+			 , upd_id
+			 , upd_dt
 		FROM tb_code_group
 		WHERE 1=1
+		AND use_yn = 'Y'
 		<if test="groupNm != null and groupNm != ''">
 			AND (
 				group_cd LIKE '%' || #{groupNm} || '%'
@@ -34,8 +41,14 @@
 	-->
 	<select id="selectCodeGroup" parameterType="String" resultType="com.study.spring.code.vo.CodeGroupVo">
 		/* CodeMapper.selectCodeGroup */
-		SELECT 
-			group_cd, group_nm, group_desc, use_yn, reg_id, reg_dt, upd_id, upd_dt
+		SELECT group_cd
+			 , group_nm
+			 , group_desc
+			 , use_yn
+			 , reg_id
+			 , reg_dt
+			 , upd_id
+			 , upd_dt
 		FROM tb_code_group
 		WHERE group_cd = #{groupCd}
 	</select>
@@ -46,10 +59,23 @@
 	-->
 	<insert id="insertCodeGroup" parameterType="com.study.spring.code.vo.CodeGroupVo">
 		/* CodeMapper.insertCodeGroup */
-		INSERT INTO tb_code_group (
-			group_cd, group_nm, group_desc, use_yn, reg_id, reg_dt
-		) VALUES (
-			#{groupCd}, #{groupNm}, #{groupDesc}, 'Y', #{regId}, TO_CHAR(NOW(), 'YYYYMMDDHH24MISS')
+		INSERT INTO tb_code_group 
+				(
+					group_cd
+				  , group_nm
+				  , group_desc
+				  , use_yn
+				  , reg_id
+				  , reg_dt
+				) 
+		VALUES 
+				(
+					#{groupCd}
+				  , #{groupNm}
+				  , #{groupDesc}
+				  , 'Y'
+				  , #{regId}
+				  , TO_CHAR(NOW(), 'YYYYMMDDHH24MISS')
 		)
 	</insert>
 
@@ -60,7 +86,7 @@
 	<update id="updateCodeGroup" parameterType="com.study.spring.code.vo.CodeGroupVo">
 		/* CodeMapper.updateCodeGroup */
 		UPDATE tb_code_group
-		SET group_nm = #{groupNm}
+		SET   group_nm = #{groupNm}
 			, group_desc = #{groupDesc}
 			, use_yn = #{useYn}
 			, upd_id = #{updId}
@@ -75,7 +101,7 @@
 	<update id="deleteCodeGroup" parameterType="com.study.spring.code.vo.CodeGroupVo">
 		/* CodeMapper.deleteCodeGroup */
 		UPDATE tb_code_group
-		SET use_yn = 'N'
+		SET   use_yn = 'N'
 			, upd_id = #{updId}
 			, upd_dt = TO_CHAR(NOW(), 'YYYYMMDDHH24MISS')
 		WHERE group_cd = #{groupCd}
@@ -87,10 +113,20 @@
 	-->
 	<select id="selectCodeDetailList" parameterType="com.study.spring.code.vo.CodeDetailVo" resultType="com.study.spring.code.vo.CodeDetailVo">
 		/* CodeMapper.selectCodeDetailList */
-		SELECT 
-			group_cd, detail_cd, code_nm, code_desc, sort_order, use_yn, reg_id, reg_dt, upd_id, upd_dt
+		SELECT group_cd
+			 , detail_cd
+			 , code_nm
+			 , code_desc
+			 , sort_order
+			 , use_yn
+			 , reg_id
+			 , reg_dt
+			 , upd_id
+			 , upd_dt
 		FROM tb_code_detail
-		WHERE group_cd = #{groupCd}
+		WHERE 1=1
+		AND group_cd = #{groupCd}
+		AND use_yn = 'Y'
 		<if test="useYn != null and useYn != ''">
 			AND use_yn = #{useYn}
 		</if>
@@ -103,8 +139,16 @@
 	-->
 	<select id="selectCodeDetail" parameterType="com.study.spring.code.vo.CodeDetailVo" resultType="com.study.spring.code.vo.CodeDetailVo">
 		/* CodeMapper.selectCodeDetail */
-		SELECT 
-			group_cd, detail_cd, code_nm, code_desc, sort_order, use_yn, reg_id, reg_dt, upd_id, upd_dt
+		SELECT group_cd
+			 , detail_cd
+			 , code_nm
+			 , code_desc
+			 , sort_order
+			 , use_yn
+			 , reg_id
+			 , reg_dt
+			 , upd_id
+			 , upd_dt
 		FROM tb_code_detail
 		WHERE group_cd = #{groupCd}
 		AND detail_cd = #{detailCd}
@@ -116,11 +160,28 @@
 	-->
 	<insert id="insertCodeDetail" parameterType="com.study.spring.code.vo.CodeDetailVo">
 		/* CodeMapper.insertCodeDetail */
-		INSERT INTO tb_code_detail (
-			group_cd, detail_cd, code_nm, code_desc, sort_order, use_yn, reg_id, reg_dt
-		) VALUES (
-			#{groupCd}, #{detailCd}, #{codeNm}, #{codeDesc}, #{sortOrder}, 'Y', #{regId}, TO_CHAR(NOW(), 'YYYYMMDDHH24MISS')
-		)
+		INSERT INTO tb_code_detail 
+				(
+					group_cd
+				  , detail_cd
+				  , code_nm
+				  , code_desc
+				  , sort_order
+				  , use_yn
+				  , reg_id
+				  , reg_dt
+				) 
+		VALUES 
+				(
+					#{groupCd}
+				  , #{detailCd}
+				  , #{codeNm}
+				  , #{codeDesc}
+				  , #{sortOrder}
+				  , 'Y'
+				  , #{regId}
+				  , TO_CHAR(NOW(), 'YYYYMMDDHH24MISS')
+				)
 	</insert>
 
 	<!-- 
@@ -130,7 +191,7 @@
 	<update id="updateCodeDetail" parameterType="com.study.spring.code.vo.CodeDetailVo">
 		/* CodeMapper.updateCodeDetail */
 		UPDATE tb_code_detail
-		SET code_nm = #{codeNm}
+		SET   code_nm = #{codeNm}
 			, code_desc = #{codeDesc}
 			, sort_order = #{sortOrder}
 			, use_yn = #{useYn}
@@ -147,11 +208,24 @@
 	<update id="deleteCodeDetail" parameterType="com.study.spring.code.vo.CodeDetailVo">
 		/* CodeMapper.deleteCodeDetail */
 		UPDATE tb_code_detail
-		SET use_yn = 'N'
+		SET   use_yn = 'N'
 			, upd_id = #{updId}
 			, upd_dt = TO_CHAR(NOW(), 'YYYYMMDDHH24MISS')
 		WHERE group_cd = #{groupCd}
 		AND detail_cd = #{detailCd}
+	</update>
+
+	<!-- 
+		CodeDao.deleteCodeDetailByGroup
+		@Description : 코드 상세 전체 삭제 (Soft Delete) - 그룹 삭제 시 연계
+	-->
+	<update id="deleteCodeDetailByGroup" parameterType="com.study.spring.code.vo.CodeGroupVo">
+		/* CodeMapper.deleteCodeDetailByGroup */
+		UPDATE tb_code_detail
+		SET   use_yn = 'N'
+			, upd_id = #{updId}
+			, upd_dt = TO_CHAR(NOW(), 'YYYYMMDDHH24MISS')
+		WHERE group_cd = #{groupCd}
 	</update>
 
 </mapper>

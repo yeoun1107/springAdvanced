@@ -1,8 +1,5 @@
 package com.study.spring.login.service.impl;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -138,14 +135,14 @@ public class LoginServiceImpl implements LoginService {
 		// 2. VO 매핑 및 데이터 가공
 		LoginVo loginVo = new LoginVo();
 		loginVo.setUserId(loginRequestDto.getUserId());
-		loginVo.setPassword(loginRequestDto.getPassword()); // BCrypt 암호화는 다음 단계에서 적용 예정
+		loginVo.setPassword(loginRequestDto.getPassword()); // [TODO] BCrypt 암호화
 		
-		// yyyyMMddHHmmss 형식으로 포맷팅
+		// 3. 생성일자 포맷팅 (yyyyMMddHHmmss)
 		String now = DateUtil.getCurrentDateTime();
 		loginVo.setCreateDt(now);
 		loginVo.setDelYn("N");
 
-		// 3. DB 저장
+		// 4. DB 저장
 		loginDao.insertUser(loginVo);
 		
 	}
