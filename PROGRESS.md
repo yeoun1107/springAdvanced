@@ -7,15 +7,21 @@
 
 ## 1. 프로젝트 개요
 - **프로젝트명**: Study Spring (학습용 웹 서비스)
-- **주요 기술 스택**: Spring Boot 3.5.11, Java 17, PostgreSQL 17, MyBatis, Thymeleaf, Argon/Tabler.io 스타일 UI
-- **최종 업데이트**: 2026-03-24
+- **주요 기술 스택**: Spring Boot 3.5.11, Java 17, PostgreSQL 17, MyBatis, Thymeleaf, javascript(ES6+), jquery 3.6+
+- **최종 업데이트**: 2026-03-27
 
 
 ## 2. 작업 완료 내역 (History)
-- **2026-03-24**
-	- [Backend] 전역 에러 처리 핸들러 구축: `GlobalExceptionHandler`, `CustomException`, `ResponseCode` 도입을 통한 에러 처리 공통화 및 보일러플레이트 제거
-	- [Refactor] 로그인 로직 고도화: `LoginApiController`, `LoginServiceImpl` 내 반복되는 `try-catch` 및 응답 객체 수동 생성 로직 제거
-	- [Standard] 응답 포맷 통일: `CommonResponseDto`와 `ResponseCode` Enum 연계를 통한 일관된 API 응답 구조 확립
+- **2026-03-27**
+	- [Backend] 코드 그룹 삭제 시 하위 상세 코드 일괄 Soft Delete 처리 구현 (데이터 정합성 강화)
+	- [Backend] `CodeServiceImpl.deleteCodeGroup` 에 `@Transactional` 적용 및 연계 삭제 로직(Cascade Soft Delete) 추가
+	- [BugFix] `CodeMapper.xml` 내 PostgreSQL 문법 오류 수정 (문자열 리터럴 큰따옴표 -> 작은따옴표 변경)
+	- [Test] `CodeServiceTest` 에 그룹 삭제 시 하위 상세 코드의 `use_yn` 상태까지 검증하는 TDD 케이스 보강
+	- [Standard] `GEMINI.md`, `GEMINI_BE.md`, `GEMINI_FE.md` 엔지니어링 표준 완전 숙지 및 적용
+
+- **2026-03-24** (요약)
+	- [Backend] 전역 에러 처리 핸들러 구축 및 공통 응답 구조 확립, [Refactor] 로그인 로직 고도화
+	- (상세 내역은 `ProgressHistory/2026-03-24_history.md` 참조)
 
 - **2026-03-19** (요약)
 	- [Practice] Spring RestClient 외부 API 연동 실습 및 환율 대시보드 UI 구현
@@ -41,8 +47,8 @@
 - **Spring 3.2+ Rest Client를 활용한 외부 API 연동 실습 완료**
 - **공통 세션 관리 및 유저 컨텍스트 기반 전역 공유 체계 구축 완료**
 - **반응형 공통 레이아웃 및 대시보드 UI 고도화 완료 (CSS 완전 분리)**
+- **코드 관리(Master-Detail) 연계 삭제(Soft Delete) 로직 및 데이터 정합성 강화 완료**
 - 로그인/회원가입 인증 프로세스 및 페이지 이동 연동 완료
-- 코드 관리(Master-Detail) CRUD 기능 및 실시간 연동 완료
 
 
 ## 4. 향후 작업 로드맵 (To-Do)
